@@ -1,1 +1,3 @@
 # Playground to test stuff
+
+demonstrate git signed commits from a VSCode DevContainer within Ubuntu WSL using 1Password SSH Agent in Windows...
