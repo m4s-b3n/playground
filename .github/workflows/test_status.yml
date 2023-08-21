@@ -1,0 +1,76 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+    # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      fail_notify:
+        description: "Fail Notify"
+        required: true
+        type: boolean      
+      fail_parse:
+        description: "Fail Parse"
+        required: true
+        type: boolean 
+      fail_create:
+        description: "Fail Create"
+        required: true
+        type: boolean
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  notify:
+    name: "Notify"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Success
+        run: echo "Success"
+      - name: Fail
+        run: |
+          echo "Fail"
+          false
+        if: ${{ inputs.fail_notify == 'true' }}
+
+  parse:
+    name: "Parse"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Success
+        run: echo "Success"
+      - name: Fail
+        run: |
+          echo "Fail"
+          false
+        if: ${{ inputs.fail_parse == 'true' }}
+
+  handle:
+    name: "Handle"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Success
+        run: echo "Success"
+      - name: Fail
+        run: |
+          echo "Fail"
+          false
+        if: ${{ inputs.fail_create == 'true' }}
+
+  finish:
+    if: ${{ always() }}
+    needs:
+      - notify
+      - parse
+      - handle
+    name: "Handle Deletion Issue"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - name: "Fail"
+        run: echo Failed
+        if: ${{ failure() }}
+      - name: "Success"
+        run: echo Success
+        if: ${{ success() }}
