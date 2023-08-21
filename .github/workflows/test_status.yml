@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Test Status Checks
 
 # Controls when the workflow will run
 on:
@@ -36,6 +36,7 @@ jobs:
 
   parse:
     name: "Parse"
+    needs: notify
     runs-on: ubuntu-latest
     steps:
       - name: Success
@@ -48,6 +49,7 @@ jobs:
 
   handle:
     name: "Handle"
+    needs: parse
     runs-on: ubuntu-latest
     steps:
       - name: Success
