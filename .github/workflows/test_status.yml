@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Success
-        run: echo "Success
+        run: echo "Success"
       - name: Fail
         run: |
           echo "Fail"
