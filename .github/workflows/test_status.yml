@@ -63,6 +63,15 @@ jobs:
           echo "Fail"
           false
         if: ${{ inputs.fail_create }}
+      - name: Summarize
+        env:
+          USER: ${{ github.actor }}
+        run: |
+          {
+            echo "# Input Parsed"
+            echo "Repository: [$GITHUB_REPOSITORY]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY)"
+            echo "User: @${USER}"
+          } >> $GITHUB_STEP_SUMMARY
 
   comment:
     if: ${{ failure() }}
