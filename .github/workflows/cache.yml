@@ -15,7 +15,8 @@ jobs:
       - name: Display Files
         run: tree .
       - name: Create Files
-        run: echo "filename: ${{ matrix.file }}" >> ${{ matrix.file }}
+        run: |
+          echo "filename: ${{ matrix.file }}" >> ${{ matrix.file }}
       - name: Display Files
         run: tree .
       - name: Save Files
