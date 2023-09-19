@@ -14,11 +14,6 @@ jobs:
     steps:
       - name: Display Files
         run: tree .
-      - name: Init Cache
-        uses: actions/cache@v3
-        with:
-          path: test
-          key: cache-test-${{ github.sha }}
       - name: Create Files
         run: |
           mkdir -p test
@@ -26,10 +21,12 @@ jobs:
       - name: Display Files
         run: tree .
       - name: Save Files
-        uses: actions/cache/save@v3
+        uses: actions/cache@v3
         with:
           path: test
-          key: cache-test-${{ github.sha }}
+          key: cache-test-${{ github.sha }}-${{ hashFiles(test) }}
+          restore-keys: |
+            cache-test-${{ github.sha }}-
       - name: Display Files
         run: tree .
 
@@ -43,6 +40,8 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: test
-          key: cache-test-${{ github.sha }}          
+          key: cache-test-${{ github.sha }}  
+          restore-keys: |
+            cache-test-${{ github.sha }}-        
       - name: Display Files
         run: tree .          
