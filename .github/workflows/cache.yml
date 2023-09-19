@@ -21,7 +21,7 @@ jobs:
       - name: Save Files
         uses: actions/cache/save@v3
         with:
-          path: ./${{ matrix.file }}
+          path: ${{ matrix.file }}
           key: cache-test-${{ github.run_id }}
       - name: Display Files
         run: tree .
@@ -35,7 +35,7 @@ jobs:
       - name: Restore Files
         uses: actions/cache/restore@v3
         with:
-          path: ./*
+          path: '*'
           key: cache-test-${{ github.run_id }}
       - name: Display Files
         run: tree .
