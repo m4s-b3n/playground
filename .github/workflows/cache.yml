@@ -50,8 +50,8 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: |
-            ./bla
-            ./blubb
+            bla
+            blubb
           key: cache-test-${{ github.run_id }}
       - name: Display Files
         run: tree .
