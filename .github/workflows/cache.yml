@@ -16,13 +16,14 @@ jobs:
         run: tree .
       - name: Create Files
         run: |
-          echo "filename: ${{ matrix.file }}" >> ${{ matrix.file }}
+          mkdir test
+          echo "filename: ${{ matrix.file }}" >> test/${{ matrix.file }}
       - name: Display Files
         run: tree .
       - name: Save Files
-        uses: actions/cache@v3
+        uses: actions/cache/save@v3
         with:
-          path: .
+          path: test
           key: cache-test-${{ github.sha }}
       - name: Display Files
         run: tree .
@@ -34,9 +35,9 @@ jobs:
       - name: Display Files
         run: tree .    
       - name: Restore Files
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
-          path: .
+          path: test
           key: cache-test-${{ github.sha }}
       - name: Display Files
         run: tree .
@@ -48,11 +49,11 @@ jobs:
       - name: Display Files
         run: tree .    
       - name: Restore Files
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: |
-            ./bla
-            ./blubb
+            test/bla
+            test/blubb
           key: cache-test-${{ github.sha }}
       - name: Display Files
         run: tree .
