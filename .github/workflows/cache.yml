@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: test
-          key: cache-test-${{ github.sha }}-${{ hashFiles(test) }}
+          key: cache-test-${{ github.sha }}-${{ hashFiles('test') }}
           restore-keys: |
             cache-test-${{ github.sha }}-
       - name: Display Files
