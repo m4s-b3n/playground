@@ -39,4 +39,20 @@ jobs:
           key: cache-test-${{ github.run_id }}
       - name: Display Files
         run: tree .
+
+  restore-files-static:
+    needs: save-files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display Files
+        run: tree .    
+      - name: Restore Files
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            ./bla
+            ./blubb
+          key: cache-test-${{ github.run_id }}
+      - name: Display Files
+        run: tree .
           
