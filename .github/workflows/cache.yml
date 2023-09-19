@@ -6,21 +6,21 @@ on:
 jobs:
   save-files:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        max-parallel: 1
+        file: ["bla", "blubb"]
     steps:
       - name: Display Files
         run: tree .
       - name: Create Files
-        run: |
-          touch bla
-          touch blubb          
+        run: touch ${{ matrix.file }}          
       - name: Display Files
         run: tree .
       - name: Save Files
         uses: actions/cache/save@v3
         with:
-          path: |
-            ./bla
-            ./blubb
+          path: .
           key: cache-test-${{ github.run_id }}   
       - name: Display Files
         run: tree .
@@ -34,6 +34,7 @@ jobs:
       - name: Restore Files
         uses: actions/cache/restore@v3
         with:
+          path: .
           key: cache-test-${{ github.run_id }}   
       - name: Display Files
         run: tree .
