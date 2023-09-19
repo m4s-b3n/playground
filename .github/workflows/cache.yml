@@ -26,6 +26,7 @@ jobs:
         run: tree .
 
   restore-files:
+    needs: save-files
     runs-on: ubuntu-latest
     steps:
       - name: Display Files
