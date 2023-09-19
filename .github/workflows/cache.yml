@@ -34,7 +34,6 @@ jobs:
       - name: Restore Files
         uses: actions/cache/restore@v3
         with:
-          path: '*'
           key: cache-test-${{ github.run_id }}   
       - name: Display Files
         run: tree .
