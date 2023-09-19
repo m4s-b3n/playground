@@ -20,11 +20,10 @@ jobs:
       - name: Display Files
         run: tree .
       - name: Save Files
-        uses: actions/cache/save@v3
+        uses: actions/cache@v3
         with:
-          path: |
-            ./${{ matrix.file }}
-          key: cache-test-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.file }}
+          path: .
+          key: cache-test-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Display Files
         run: tree .
 
@@ -35,13 +34,11 @@ jobs:
       - name: Display Files
         run: tree .    
       - name: Restore Files
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             ./*
           key: cache-test-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: |
-            cache-test-${{ github.run_id }}-${{ github.run_attempt }}-
       - name: Display Files
         run: tree .
 
@@ -52,14 +49,12 @@ jobs:
       - name: Display Files
         run: tree .    
       - name: Restore Files
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             ./bla
             ./blubb
           key: cache-test-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: |
-            cache-test-${{ github.run_id }}-${{ github.run_attempt }}-
       - name: Display Files
         run: tree .
           
