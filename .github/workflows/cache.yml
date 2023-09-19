@@ -24,7 +24,7 @@ jobs:
         with:
           path: |
             ./${{ matrix.file }}
-          key: cache-test-${{ github.run_id }}-${{ github.run_attempt }}
+          key: cache-test-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.file }}
       - name: Display Files
         run: tree .
 
@@ -41,7 +41,7 @@ jobs:
             ./*
           key: cache-test-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
-            cache-test-${{ github.run_id }}-
+            cache-test-${{ github.run_id }}-${{ github.run_attempt }}-
       - name: Display Files
         run: tree .
 
@@ -59,7 +59,7 @@ jobs:
             ./blubb
           key: cache-test-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
-            cache-test-${{ github.run_id }}-
+            cache-test-${{ github.run_id }}-${{ github.run_attempt }}-
       - name: Display Files
         run: tree .
           
