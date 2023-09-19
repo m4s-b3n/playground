@@ -21,7 +21,7 @@ jobs:
           key: cache-test-${{ github.sha }}
       - name: Create Files
         run: |
-          mkdir test
+          mkdir -p test
           echo "filename: ${{ matrix.file }}" >> test/${{ matrix.file }}
       - name: Display Files
         run: tree .
