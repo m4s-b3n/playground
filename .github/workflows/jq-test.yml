@@ -1,0 +1,51 @@
+name: Test jq
+
+on:
+  workflow_dispatch:
+
+jobs:
+  save-files:
+    runs-on: ubuntu-latest
+    env:
+      JSON: |
+        {
+          "training-type": {
+            "title": "Training Type",
+            "content": [
+              "Developer"
+            ],
+            "text": "Developer"
+          },
+          "day-one": {
+            "title": "Day one",
+            "content": [
+              "10.10.2023 / 09:00 - 12:00"
+            ],
+            "text": "10.10.2023 / 09:00 - 12:00"
+          },
+          "day-two": {
+            "title": "Day two",
+            "content": [
+              "11.10.2023 / 09:00 - 12:00"
+            ],
+            "text": "11.10.2023 / 09:00 - 12:00"
+          },
+          "training-style": {
+            "title": "Training Style",
+            "content": [
+              "Standard"
+            ],
+            "text": "Standard"
+          },
+          "notes": {
+            "title": "Notes",
+            "content": [
+              "Internal workflow test..."
+            ],
+            "text": "Internal workflow test..."
+          }
+        }
+    steps:
+      - name: Test Key With Special Character
+        run: |
+          echo Value: $(echo $JSON | jq '."training-type".text')
