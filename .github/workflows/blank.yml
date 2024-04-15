@@ -1,0 +1,17 @@
+name: Env-Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: string
+        description: "Job environment"
+        required: false        
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Run a one-line script
+        run: echo Hello, world!
