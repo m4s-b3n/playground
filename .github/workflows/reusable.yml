@@ -1,0 +1,28 @@
+name: Test Secret Override
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: 'Environment to run the job'
+        required: false
+    secrets: 
+      TEST_SECRET:
+        description: 'Secret to override'
+        required: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    env:
+      TEST_SECRET: ${{ secrets.TEST_SECRET }}
+      TEST_SECRET_ENV: ${{ secrets.TEST_SECRET_ENV }}
+      SELECTED_SECRET: ${{ secrets.TEST_SECRET || secrets.TEST_SECRET_ENV }}
+    steps:
+      - name: Test Secret
+        run: |
+          echo TEST_SECRET: $TEST_SECRET | base64
+          echo TEST_SECERT_ENV: $TEST_SECRET_ENV | base64
+          echo SELECTED_SECRET: $SELECTED_SECRET | base64
