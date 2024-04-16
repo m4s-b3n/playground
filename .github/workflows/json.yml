@@ -1,0 +1,31 @@
+name: JSON
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output JSON
+        env:
+          JSON: |
+            { 
+              "key": "value"
+            }
+        id: json
+        run: |
+          echo $JSON
+          echo $JSON | jq
+          echo "json=$(echo $JSON)" >> "$GITHUB_OUTPUT"
+      - name: Directly Access Key
+        run: |
+          echo json:
+          echo '${{ steps.json.outputs.json }}'
+          echo 
+          echo value with jq:
+          echo '${{ steps.json.outputs.json }}' | jq -r '.key'
+          echo
+          echo value direct:
+          echo '${{ steps.json.outputs.json.key }}'
+
