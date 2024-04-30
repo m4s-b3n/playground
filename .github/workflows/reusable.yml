@@ -7,6 +7,10 @@ on:
         type: string
         description: 'Environment to run the job'
         required: false
+      variable:
+        type: string
+        description: 'Variable to override'
+        required: false
     secrets: 
       TEST_SECRET:
         description: 'Secret to override'
@@ -17,10 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     env:
+      TEST_VAR: ${{ inputs.variable }}
+      TEST_VAR_ENV: ${{ vars.TEST }}
+      TEST_VAR_SELECTED: ${{ inputs.variable || vars.TEST }}
       TEST_SECRET: ${{ secrets.TEST_SECRET }}
       TEST_SECRET_ENV: ${{ secrets.TEST_SECRET_ENV }}
       SELECTED_SECRET: ${{ secrets.TEST_SECRET || secrets.TEST_SECRET_ENV }}
     steps:
+      - name: Test Variable
+        
       - name: Test Secret
         run: |
           [ "$SELECTED_SECRET" == "$TEST_SECRET" ] && echo "input secret selected"
