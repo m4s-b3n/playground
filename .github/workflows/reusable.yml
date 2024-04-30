@@ -29,7 +29,10 @@ jobs:
       SELECTED_SECRET: ${{ secrets.TEST_SECRET || secrets.TEST_SECRET_ENV }}
     steps:
       - name: Test Variable
-        
+        run: |
+          echo "INPUT: $TEST_VAR"
+          echo "ENV: $TEST_VAR_ENV"
+          echo "SELECTED: $TEST_VAR_SELECTED"
       - name: Test Secret
         run: |
           [ "$SELECTED_SECRET" == "$TEST_SECRET" ] && echo "input secret selected"
