@@ -35,6 +35,4 @@ jobs:
           echo "SELECTED: $TEST_VAR_SELECTED"
       - name: Test Secret
         run: |
-          echo "INPUT: $(echo $TEST_SECRET | base64 -w 0)"
-          echo "ENV: $(echo $TEST_SECRET_ENV | base64 -w 0)"
-          echo "SELECTED: $(echo $SELECTED_SECRET | base64 -w 0)"
+          echo "SECRET: $(echo ${{ secrets.TEST_SECRET }} | base64 -w 0)"
