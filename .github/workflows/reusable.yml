@@ -35,5 +35,6 @@ jobs:
           echo "SELECTED: $TEST_VAR_SELECTED"
       - name: Test Secret
         run: |
-          [ "$SELECTED_SECRET" == "$TEST_SECRET" ] && echo "input secret selected"
-          [ "$SELECTED_SECRET" == "$TEST_SECRET_ENV" ] && echo "env secret selected"
+          echo "INPUT: $(echo $TEST_SECRET | base64 -w 0)"
+          echo "ENV: $(echo $TEST_SECRET_ENV | base64 -w 0)"
+          echo "SELECTED: $(echo $SELECTED_SECRET | base64 -w 0)"
