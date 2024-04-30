@@ -15,6 +15,9 @@ on:
       TEST_SECRET:
         description: 'Secret to override'
         required: false
+      TEST_SECRET_ENV:
+        description: 'Secret to override'
+        required: false
 
 jobs:
   test:
@@ -36,3 +39,4 @@ jobs:
       - name: Test Secret
         run: |
           echo "SECRET: $(echo ${{ secrets.TEST_SECRET }} | base64 -w 0)"
+          echo "SECRET ENV: $(echo ${{ secrets.TEST_SECRET_ENV }} | base64 -w 0)"
