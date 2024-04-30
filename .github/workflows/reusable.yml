@@ -23,6 +23,6 @@ jobs:
     steps:
       - name: Test Secret
         run: |
-          echo TEST_SECRET: $TEST_SECRET | base64
-          echo TEST_SECERT_ENV: $TEST_SECRET_ENV | base64
-          echo SELECTED_SECRET: $SELECTED_SECRET | base64
+          echo "TEST_SECRET: $TEST_SECRET" | base64
+          echo "TEST_SECERT_ENV: $TEST_SECRET_ENV" | base64
+          echo "SELECTED_SECRET: $SELECTED_SECRET" | base64
