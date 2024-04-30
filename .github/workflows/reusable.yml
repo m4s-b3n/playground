@@ -23,6 +23,5 @@ jobs:
     steps:
       - name: Test Secret
         run: |
-          echo TEST_SECRET: $(echo $TEST_SECRET | base64)
-          echo TEST_SECERT_ENV: $(echo $TEST_SECRET_ENV | base64)
-          echo SELECTED_SECRET: $(echo SELECTED_SECRET | base64)
+          [ $SELECTED_SECRET == $TEST_SECRET ] && echo input secret selected
+          [ $SELECTED_SECRET == $TEST_SECRET_ENV ] && echo env secret selected
