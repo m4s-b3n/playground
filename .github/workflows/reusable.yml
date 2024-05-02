@@ -11,12 +11,27 @@ on:
         type: string
         description: 'Variable to override'
         required: false
+      variables-list:
+        type: string
+        required: false
+        description: |
+          variables as newline-speparated list
+          Example:
+            VAR1=value1
+            VAR2="element1,element2,element3"        
     secrets: 
       TEST_SECRET:
         description: 'Secret to override'
         required: false
       TEST_SECRET_ENV:
         description: 'Secret to override'
+        required: false
+      SECRETS_LIST:
+        description: |
+          Secrets as newline-separated list
+          Example:
+            SECRET1=value1
+            SECRET2="element1,element2,element3"
         required: false
 
 jobs:
@@ -40,3 +55,18 @@ jobs:
         run: |
           echo "SECRET: $(echo ${{ secrets.TEST_SECRET }} | base64 -w 0)"
           echo "SECRET ENV: $(echo ${{ secrets.TEST_SECRET_ENV }} | base64 -w 0)"
+      - name: Print variables list
+        run: |
+          while IFS= read -r line; do
+            if [[ -n $line ]]; then
+              echo $line
+            fi
+          done <<< '${{ inputs.variables-list }}'
+      - name: Print secrets list
+        run: |
+          while IFS= read -r line; do
+            if [[ -n $line ]]; then
+              echo $line
+            fi
+          done <<< '${{ secrets.SECRETS_LIST }}'
+          
