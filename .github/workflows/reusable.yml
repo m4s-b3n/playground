@@ -11,6 +11,10 @@ on:
         type: string
         description: 'Variable to override'
         required: false
+      variable-single:
+        type: string
+        required: false 
+        description: Single variable to print
       variables-list:
         type: string
         required: false
@@ -25,6 +29,9 @@ on:
         required: false
       TEST_SECRET_ENV:
         description: 'Secret to override'
+        required: false
+      SECRET_SINGLE: 
+        description: 'Secret to print'
         required: false
       SECRETS_LIST:
         description: |
@@ -55,6 +62,9 @@ jobs:
         run: |
           echo "SECRET: $(echo ${{ secrets.TEST_SECRET }} | base64 -w 0)"
           echo "SECRET ENV: $(echo ${{ secrets.TEST_SECRET_ENV }} | base64 -w 0)"
+      - name: Print single variable
+        run: |
+          echo ${{ inputs.variable-single }}
       - name: Print variables list
         run: |
           while IFS= read -r line; do
@@ -62,6 +72,9 @@ jobs:
               echo $line
             fi
           done <<< '${{ inputs.variables-list }}'
+      - name: Print single secret
+        run: |
+          echo "SECRET: $(echo ${{ secrets.SECRET_SINGLE }} | base64 -w 0)"
       - name: Print secrets list
         run: |
           while IFS= read -r line; do
