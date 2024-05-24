@@ -1,0 +1,61 @@
+name: JSON replace
+
+on:
+  workflow_dispatch:
+
+jobs:
+  replace-with-json-file-action:
+    name: Replace Fields
+    runs-on: windows-latest
+    environment: json
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Display JSON before
+        run: |
+          cat json/test1.json
+
+      - name: Update Json File
+        uses: restackio/update-json-file-action@2.1
+        with:
+          file: json/test1.json
+          fields: >-
+            { 
+              "key1": "${{ secrets.SECRET1 }}",
+              "object1.key1": "${{ vars.VALUE1 }}",
+              "object2.nestedObject2.key1": "${{ secrets.SECRET2 }}",
+              "array1[1]": "${{ vars.VALUE2 }}"
+            }
+
+      - name: Display JSON after
+        run: |
+          cat json/test1.json
+
+  replace-with-json-values-action:
+    name: Replace Values
+    runs-on: windows-latest
+    environment: json
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Display JSON before
+        run: |
+          cat json/test2.json
+
+      - name: Update Json File
+        uses: restackio/update-json-values-action@v1.0.0
+        with:
+          file: json/test2.json
+          values: >-
+            { 
+              "SECRET1": "${{ secrets.SECRET1 }}",
+              "SECRET2": "${{ secrets.SECRET2 }}",
+              "VALUE1": "${{ vars.VALUE1 }}",
+              "VALUE2": "${{ vars.VALUE2 }}"
+            }
+
+      - name: Display JSON after
+        run: |
+          cat json/test2.json

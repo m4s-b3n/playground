@@ -1,0 +1,22 @@
+{
+    "key1": "SECRET1",
+    "key2": "value2",
+    "object1": {
+        "key1": "VALUE1",
+        "key2": "value2_object1"
+    },
+    "object2": {
+        "nestedObject1": {
+            "key1": "value1_nestedObject1",
+            "key2": "value2_nestedObject1"
+        },
+        "nestedObject2": {
+            "key1": "value1_nestedObject2",
+            "key2": "SECRET2"
+        }
+    },
+    "array1": [
+        "value1_array1",
+        "VALUE2"
+    ]    
+}
