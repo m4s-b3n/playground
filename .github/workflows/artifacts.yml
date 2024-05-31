@@ -1,0 +1,45 @@
+name: Artifact Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  uploadv3:
+    name: Upload using action version 3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create
+        run: |
+          mkdir dist
+          echo bla >> dist/bla
+          echo blubb >> dist/blubb
+      - name: Display
+        run: |
+          sudo apt update
+          sudo apt install -y tree
+          tree        
+      - name: Upload v3
+        uses: actions/upload-artifact@v3
+        with:
+          name: distv3
+          path: dist
+
+  downloadv3:
+    name: Download using action version 3
+    needs:
+      - uploadv3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download v3
+        uses: actions/download-artifact@v3
+        with:
+          name: distv3
+          path: dist
+      - name: Display
+        run: |
+          sudo apt update
+          sudo apt install -y tree
+          tree
+      
+      
+      
