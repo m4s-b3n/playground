@@ -1,0 +1,35 @@
+name: Docker Metadata
+
+on:
+  workflow_dispatch:
+
+jobs:
+  meta:  
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            myimage
+            another/image
+          tags:
+            v1.0
+            shenannigans
+            latest
+          labels:
+            org.opencontainers.image.title=MyCustomTitle
+            org.opencontainers.image.description=Another description
+            org.opencontainers.image.vendor=MyCompany
+          annotations:
+            anno1
+            anno2
+      - name: Display Tags
+        run: echo ${{ steps-meta.outputs.tags }}
+      - name: Display Labels
+        run: echo ${{ steps-meta.outputs.labels }}
+      - name: Display Annotations
+        run: echo ${{ steps-meta.outputs.annotations }}
+        
+    
