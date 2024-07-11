@@ -12,17 +12,14 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            myimage
-            another/image
-          tags:
-            v1.0
-            shenannigans
-            latest
-          labels:
+            myregistry/myrepo/myimage
+          tags: |
+            mytag
+          labels: |
             org.opencontainers.image.title=MyCustomTitle
             org.opencontainers.image.description=Another description
             org.opencontainers.image.vendor=MyCompany
-          annotations:
+          annotations: |
             anno1
             anno2
       - name: Display Tags
