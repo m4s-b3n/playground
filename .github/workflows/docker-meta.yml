@@ -26,10 +26,10 @@ jobs:
             anno1
             anno2
       - name: Display Tags
-        run: echo ${{ steps.meta.outputs.tags }}
+        run: echo '${{ steps.meta.outputs.tags }}'
       - name: Display Labels
-        run: echo ${{ steps.meta.outputs.labels }}
+        run: echo '${{ steps.meta.outputs.labels }}'
       - name: Display Annotations
-        run: echo ${{ steps.meta.outputs.annotations }}
+        run: echo '${{ steps.meta.outputs.annotations }}'
         
     
