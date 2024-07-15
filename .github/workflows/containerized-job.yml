@@ -49,5 +49,5 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Run a one-line command
-        run: echo "Hello, world!"
+      - name: Check OS
+        run: cat /etc/os-release

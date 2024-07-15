@@ -1,1 +1,1 @@
-FROM ubuntu:jammy
+FROM alpine:latest
