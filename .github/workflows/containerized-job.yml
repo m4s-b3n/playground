@@ -30,7 +30,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}/buildenv-test:latest
+          images: ghcr.io/${{ github.repository }}/buildenv-test
+          tags: latest
 
       - name: Build and push
         uses: docker/build-push-action@v6
