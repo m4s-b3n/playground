@@ -1,0 +1,13 @@
+name: Run a dispatchable workflow from branch only
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dispatch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Hello World
