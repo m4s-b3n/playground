@@ -12,8 +12,8 @@ jobs:
     steps:
       - name: Output unmasked
         run: |
-          echo SECRET1: "${{ env.SECRET }}"
-          echo SECRET2: "${{ env.SECRET }}"
+          echo SECRET1: "${{ env.SECRET1 }}"
+          echo SECRET2: "${{ env.SECRET2 }}"
       - name: Mask part of secret 1
         run: |
           echo "::add-mask::!P7FG8i*"      
