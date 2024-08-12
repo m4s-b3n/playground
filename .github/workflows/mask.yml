@@ -1,0 +1,29 @@
+name: Mask values
+
+on:
+  workflow_dispatch:
+
+jobs:
+  mask:
+    runs-on: ubuntu-latest
+    env:
+      SECRET1: uKb!P7FG8i*iZ4--7pf7v9oMY:asdnj=+#
+      SECRET2: -jPD9HXJnvqs*VfQRBv.pZkMa_
+    steps:
+      - name: Output unmasked
+        run: |
+          echo SECRET1: "${{ env.SECRET }}"
+          echo SECRET2: "${{ env.SECRET }}"
+      - name: Mask part of secret 1
+        run: |
+          echo "::add-mask::!P7FG8i*"      
+      - name: Output secret 1
+        run: |
+          echo SECRET1: "${{ env.SECRET1 }}"
+      - name: Mask secret 2
+        run: |
+          echo "::add-mask::${ env.SECRET2 }"
+      - name: Output part of secret 2
+        run: |
+          echo "*VfQRBv.pZ"
+          
