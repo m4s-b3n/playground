@@ -7,7 +7,7 @@ on:
 
 jobs:
   context:
-    name: Display context
+    name: Display toplevel context
     runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
@@ -36,5 +36,29 @@ jobs:
         run: echo "$MATRIX_CONTEXT"
   
   sub:
-    name: Call Subworkflow
     uses: ./.github/workflows/sub.yml
+
+  sub-env-single-line:
+    uses: ./.github/workflows/sub.yml
+    with:
+      environment: vars_secrets
+      varlist: >-
+        KEY1=${{ vars.MY_VAR }}
+        KEY2=${{ vars.MY_VAR2 }}
+    secrets:
+      secretlist: >-
+        SECRET1=${{ secrets.MY_SECRET }}
+        SECRET2=${{ secrets.MY_SECRET2 }}
+
+  sub-env-multi-line:
+    uses: ./.github/workflows/sub.yml
+    with:
+      environment: vars_secrets
+      varlist: |
+        KEY1=${{ vars.MY_VAR }}
+        KEY2=${{ vars.MY_VAR2 }}
+    secrets:
+      secretlist: |
+        SECRET1=${{ secrets.MY_SECRET }}
+        SECRET2=${{ secrets.MY_SECRET2 }}
+

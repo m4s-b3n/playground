@@ -2,11 +2,24 @@ name: Subworkflow
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: false
+      varlist:
+        type: string
+        description: list of var key-value-pairs
+        required: false
+    secrets:
+      secretlist:
+        description: list of secret key-value-pairs
+        required: false
 
 jobs:
   context:
     name: Display context
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - name: Dump GitHub context
         env:
@@ -31,4 +44,16 @@ jobs:
       - name: Dump matrix context
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+      - name: Dump inputs
+        env:
+          MATRIX_CONTEXT: ${{ toJson(inputs) }}
+        run: echo "$MATRIX_CONTEXT"
+      - name: Dump vars
+        env:
+          MATRIX_CONTEXT: ${{ toJson(vars) }}
+        run: echo "$MATRIX_CONTEXT"
+      - name: Dump secrets
+        env:
+          MATRIX_CONTEXT: ${{ toJson(secrets) }}
         run: echo "$MATRIX_CONTEXT"
