@@ -1,0 +1,198 @@
+name: Test Status Expressions On Job Level
+
+on:
+  workflow_dispatch:
+
+jobs:
+  init:
+    name: Initial
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello"
+
+  init-on-success:
+    name: Initial on Success
+    runs-on: ubuntu-latest
+    needs: init
+    if: ${{ success() }}
+    steps:
+      - run: echo "Hello"
+
+  init-on-failure:
+    name: Initial on Failure
+    runs-on: ubuntu-latest
+    needs: init
+    if: ${{ failure() }}
+    steps:
+      - run: echo "Hello"
+
+  init-on-cancelled:
+    name: Initial on Cancelled
+    runs-on: ubuntu-latest
+    needs: init
+    if: ${{ cancelled() }}
+    steps:
+      - run: echo "Hello"
+
+  success:
+    name: Success
+    runs-on: ubuntu-latest
+    needs: init
+    steps:
+      - run: echo "Success"
+
+  success-on-success:
+    name: Success on Success
+    runs-on: ubuntu-latest
+    needs: success
+    if: ${{ success() }}
+    steps:
+      - run: echo "Hello"
+  
+  success-on-failure:
+    name: Success on Failure
+    runs-on: ubuntu-latest
+    needs: success
+    if: ${{ failure() }}
+    steps:
+      - run: echo "Hello"
+
+  success-on-cancelled:
+    name: Success on Cancelled
+    runs-on: ubuntu-latest
+    needs: success
+    if: ${{ cancelled() }}
+    steps:
+      - run: echo "Hello"
+
+  fail:
+    name: Fail
+    runs-on: ubuntu-latest
+    needs: init
+    steps:
+      - run: echo "Fail"
+      - run: exit 1
+
+  fail-on-success:
+    name: Fail on Success
+    runs-on: ubuntu-latest
+    needs: fail
+    if: ${{ success() }}
+    steps:
+      - run: echo "Hello"
+
+  fail-on-failure:
+    name: Fail on Failure
+    runs-on: ubuntu-latest
+    needs: fail
+    if: ${{ failure() }}
+    steps:
+      - run: echo "Hello"
+
+  fail-on-cancelled:
+    name: Fail on Cancelled
+    runs-on: ubuntu-latest
+    needs: fail
+    if: ${{ cancelled() }}
+    steps:
+      - run: echo "Hello"
+
+  success-and-fail-on-success:
+    name: Success and Fail on Success
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: ${{ success() }}
+    steps:
+      - run: echo "Hello"
+
+  success-and-fail-on-failure:
+    name: Success and Fail on Failure
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: ${{ failure() }}
+    steps:
+      - run: echo "Hello"
+
+  success-and-fail-on-cancelled:
+    name: Success and Fail on Cancelled
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: ${{ cancelled() }}
+    steps:
+      - run: echo "Hello"
+
+  success-or-fail-on-success-mor-b-1:
+    name: Success or Fail on Success (multiline or with '|' and brackets)
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: |
+      ${{ (success()) &&
+          (needs.success.result == 'success' || needs.fail.result == 'success') }}
+    steps:
+      - run: echo "Hello"
+
+  success-or-fail-on-success-mor-b-2:
+    name: Success or Fail on Success (multiline or with '|-' and brackets)
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: |-
+      ${{ (success()) &&
+          (needs.success.result == 'success' || needs.fail.result == 'success') }}
+    steps:
+      - run: echo "Hello"
+
+  success-or-fail-on-success-mor-b-3:
+    name: Success or Fail on Success (multiline or with '>' and brackets)
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: >
+      ${{ (success()) &&
+          (needs.success.result == 'success' || needs.fail.result == 'success') }}
+    steps:
+      - run: echo "Hello"
+
+  success-or-fail-on-success-mor-b-4:
+    name: Success or Fail on Success (multiline or with '>-' and brackets)
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: >-
+      ${{ (success()) &&
+          (needs.success.result == 'success' || needs.fail.result == 'success') }}
+    steps:
+      - run: echo "Hello"
+
+  success-or-fail-on-success-mor-nb-1:
+    name: Success or Fail on Success (multiline or with '|' and no brackets)
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: |
+      (success()) &&
+      (needs.success.result == 'success' || needs.fail.result == 'success')
+    steps:
+      - run: echo "Hello"
+
+  success-or-fail-on-success-mor-nb-2:
+    name: Success or Fail on Success (multiline or with '|-' and no brackets)
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: |-
+      (success()) &&
+      (needs.success.result == 'success' || needs.fail.result == 'success')
+    steps:
+      - run: echo "Hello"
+
+  success-or-fail-on-success-sor-b-1:
+    name: Success or Fail on Success (single line or with brackets)
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: ${{ (success()) && (needs.success.result == 'success' || needs.fail.result == 'success') }}
+    steps:
+      - run: echo "Hello"
+
+  success-or-fail-on-success-sor-nb-1:
+    name: Success or Fail on Success (single line or without brackets)
+    runs-on: ubuntu-latest
+    needs: [success, fail]
+    if: (success()) && (needs.success.result == 'success' || needs.fail.result == 'success')
+    steps:
+      - run: echo "Hello"

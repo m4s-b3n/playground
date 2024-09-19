@@ -1,0 +1,109 @@
+name: Test Status Expressions On Step Level
+
+on:
+  workflow_dispatch:
+
+jobs:
+  init:
+    name: Initial
+    runs-on: ubuntu-latest
+    steps:
+      - name: Success
+        if: ${{ success() }}
+        run: echo "Success"
+      - name: Failure
+        if: ${{ failure() }}
+        run: echo "failure"
+      - name: Cancelled
+        if: ${{ cancelled() }}
+        run: echo "cancelled"
+
+  dependent-on-init:
+    name: Dependent on Initial
+    runs-on: ubuntu-latest
+    needs: init
+    steps:
+      - name: Success
+        if: ${{ success() }}
+        run: echo "Success"
+      - name: Failure
+        if: ${{ failure() }}
+        run: echo "failure"
+      - name: Cancelled
+        if: ${{ cancelled() }}
+        run: echo "cancelled"
+  
+  failure-continue:
+    name: Failure with continue
+    runs-on: ubuntu-latest
+    needs: dependent-on-init
+    steps:
+      - name: Fail
+        run: exit 1
+        continue-on-error: true
+      - name: Success
+        if: ${{ success() }}
+        run: echo "Success"
+      - name: Failure
+        if: ${{ failure() }}
+        run: echo "failure"
+      - name: Cancelled
+        if: ${{ cancelled() }}
+        run: echo "cancelled"     
+
+  dependent-on-failure-continue:
+    name: Dependent on Failure with continue
+    if: always()
+    runs-on: ubuntu-latest
+    needs: failure-continue
+    steps:
+      - name: Success
+        if: ${{ success() }}
+        run: echo "Success"
+      - name: Failure
+        if: ${{ failure() }}
+        run: echo "failure"
+      - name: Cancelled
+        if: ${{ cancelled() }}
+        run: echo "cancelled" 
+  
+  failure-no-continue:
+    name: Failure
+    if: always()
+    runs-on: ubuntu-latest
+    needs: dependent-on-failure-continue
+    steps:
+      - name: Fail
+        run: exit 1
+
+  dependent-on-failure-no-continue:
+    name: Dependent on Failure
+    if: always()
+    runs-on: ubuntu-latest
+    needs: failure-no-continue
+    steps:
+      - name: Success
+        if: ${{ success() }}
+        run: echo "Success"
+      - name: Failure
+        if: ${{ failure() }}
+        run: echo "failure"
+      - name: Cancelled
+        if: ${{ cancelled() }}
+        run: echo "cancelled"
+
+  dependent-on-last-successfull:
+    name: Dependent on last successful
+    if: always()
+    runs-on: ubuntu-latest
+    needs: dependent-on-failure-no-continue
+    steps:
+      - name: Success
+        if: ${{ success() }}
+        run: echo "Success"
+      - name: Failure
+        if: ${{ failure() }}
+        run: echo "failure"
+      - name: Cancelled
+        if: ${{ cancelled() }}
+        run: echo "cancelled"
