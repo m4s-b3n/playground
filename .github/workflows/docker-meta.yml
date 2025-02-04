@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  meta:  
+  meta-all:  
     runs-on: ubuntu-latest
     steps:      
       - name: Docker meta
@@ -29,4 +29,16 @@ jobs:
       - name: Display Annotations
         run: echo '${{ steps.meta.outputs.annotations }}'
         
-    
+  meta-tags-only:  
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          tags: type=ref,event=branch
+          annotations: |
+            anno1
+            anno2
+      - name: Display Tags
+        run: echo '${{ steps.meta.outputs.tags }}'
