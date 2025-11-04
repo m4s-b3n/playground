@@ -1,0 +1,16 @@
+name: Checkout Private Repo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  checkout:
+    name: Check Out Using Deploy Key
+    runs-on: ubuntu-latest
+    environment: private-repo
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v5
+        with:
+          repository: ${{ vars.REPO }}
+          ssh-key: ${{ secrets.KEY }}
