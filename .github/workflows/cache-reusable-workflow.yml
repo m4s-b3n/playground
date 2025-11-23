@@ -1,0 +1,40 @@
+name: Test Caching Through Reusable Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-and-cache:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.compute-key.outputs.key }}
+      restore-key: v1-
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create files
+        run: |
+          mkdir -p cache-dir
+          echo "file1 content" > cache-dir/file1.txt
+          echo "file2 content" > cache-dir/file2.txt
+
+      - name: Compute cache key
+        id: compute-key
+        run: echo "key=v1-$(find cache-dir -type f -exec sha256sum {} \; | sort | sha256sum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+
+      - name: Cache files
+        uses: actions/cache@v4
+        with:
+          path: cache-dir
+          key: ${{ steps.compute-key.outputs.key }}
+          restore-keys: |
+            v1-
+
+  call-reusable:
+    needs: create-and-cache
+    uses: m4s-b3n/playground2/.github/workflows/caching.yml@main
+    with:
+      cache-key: ${{ needs.create-and-cache.outputs.cache-key }}
+      restore-key: ${{ needs.create-and-cache.outputs.restore-key }}
+
